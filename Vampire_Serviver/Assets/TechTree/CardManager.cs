@@ -9,11 +9,9 @@ public class CardManager : MonoBehaviour
     [Header("Tab")]
     public GameObject SelectTab; //선택창
     [SerializeField] Transform CardTable; //선택란이 담겨있는 Transform
-    [SerializeField] GameObject Warningtab; //포인트가 남아있을 때 나오는 확인탭
     [Header("Element")]
     public ClickEvent TechCard; //선택한 테크카드
     public ClickEvent[] SelectAbleCard; //현재 선택 가능한 테크
-    [SerializeField] GameObject SelectButton; //선택 버튼
     [SerializeField] Text SelectCountText; //선택 포인트 표시
 
     int SelectCount;
@@ -47,24 +45,28 @@ public class CardManager : MonoBehaviour
                         if (SelectAbleCard[i] != card)
                         {
                             SelectAbleCard[i].GetComponent<Image>().enabled = false;
+                            SelectAbleCard[i].TechName.enabled = false;
                         }
                         else
                         {
                             SelectAbleCard[i].GetComponent<Image>().enabled = true;
+                            SelectAbleCard[i].TechName.enabled = true;
                         }
                     }
                     TechCard.TechAnchor();
                     panelType = PanelType.Tech;
-                    SelectButton.SetActive(true);
                     break;
                 }
             case PanelType.Tech:
                 {
-                    TechCard.ResetAnchor();
+                    for (int i = 0; i < SelectAbleCard.Length; i++)
+                    {
+                        SelectAbleCard[i].TechName.enabled = true;
+                    }
+                        TechCard.ResetAnchor();
                     TechCard = null;
                     ElementSetActive(true);
                     panelType = PanelType.Card;
-                    SelectButton.SetActive(false);
                     break;
                 }
         }
@@ -83,21 +85,6 @@ public class CardManager : MonoBehaviour
         SelectTab.SetActive(true);
         InitUI();
     }
-    public void SelectCalculate() //선택 완료 계산
-    {
-        if (SelectCount > 1)
-        {
-            WarningActive(true);
-        }
-        else
-        {
-            SelectEnd();
-        }
-    }
-    public void WarningActive(bool b)
-    {
-        Warningtab.SetActive(b);
-    }
     public void SelectEnd()
     {
         //패널 다시 제자리로
@@ -106,7 +93,6 @@ public class CardManager : MonoBehaviour
         TechCard = null;
         //선택창
         SelectTab.SetActive(false);
-        Warningtab.SetActive(false);
     }
     public void InitUI()
     {

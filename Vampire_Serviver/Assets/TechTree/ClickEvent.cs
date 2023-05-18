@@ -2,10 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class ClickEvent : MonoBehaviour,IPointerClickHandler
 {
     public Vector3 MyPos;
+    public GameObject CancelImage;
+    public Text TechName;
+
     RectTransform rect;
     float time = 0;
     public void OnPointerClick(PointerEventData eventData)
@@ -18,6 +22,7 @@ public class ClickEvent : MonoBehaviour,IPointerClickHandler
     }
     void Start()
     {
+        CancelImage.SetActive(false);
         MyPos = rect.anchoredPosition3D;
     }
     public void TechAnchor()
@@ -32,10 +37,11 @@ public class ClickEvent : MonoBehaviour,IPointerClickHandler
     }
     IEnumerator TechMove()
     {
+        CancelImage.SetActive(true);
         while (time < 1)
         {
             rect.anchoredPosition3D = Vector3.Lerp(MyPos, 
-                new Vector3(-550,0,0), Easing.easeOutSine(time));
+                new Vector3(0,-400,0), Easing.easeOutSine(time));
 
             time += Time.deltaTime;
             yield return null;
@@ -43,10 +49,11 @@ public class ClickEvent : MonoBehaviour,IPointerClickHandler
     }
     IEnumerator ResetMove()
     {
+        CancelImage.SetActive(false);
         while (time > 0)
         {
             rect.anchoredPosition3D = Vector3.Lerp(MyPos,
-                new Vector3(-550, 0, 0), Easing.easeOutSine(time));
+                new Vector3(0, -400, 0), Easing.easeOutSine(time));
 
             time -= Time.deltaTime;
             yield return null;
