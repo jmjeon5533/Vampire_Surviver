@@ -46,9 +46,11 @@ public class ClickEvent : MonoBehaviour,IPointerClickHandler
             time += Time.deltaTime;
             yield return null;
         }
+        CardManager.instance.UsePointButton.SetActive(true);
     }
     IEnumerator ResetMove()
     {
+        CardManager.instance.UsePointButton.SetActive(false);
         CancelImage.SetActive(false);
         while (time > 0)
         {

@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b43931a3f83b1eb4d9a045e6fa45cf5a, type: 3}
+  m_Name: MagicsTable
+  m_EditorClassIdentifier: 
+  Tech:
+  - {fileID: 11400000, guid: 3d135c79e332c2c46957994cb6811f81, type: 2}
+  - {fileID: 11400000, guid: 8551bbf49c41f8848ad015ae44bd1cd7, type: 2}
+  - {fileID: 11400000, guid: f63034ef7217a7d45b970e249bf8377b, type: 2}
+  - {fileID: 11400000, guid: 06e6452ebf1e668448199f2003479d21, type: 2}
+  - {fileID: 11400000, guid: 170b9cdbd408e294892f8036da9d9d0b, type: 2}
