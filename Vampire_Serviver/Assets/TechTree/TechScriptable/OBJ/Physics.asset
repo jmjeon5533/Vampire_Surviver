@@ -9,10 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cac56dc7edce91a45a83be0a44d7b773, type: 3}
-  m_Name: MagicsObj3
+  m_Script: {fileID: 11500000, guid: e592010a81e5464408941043602d5f49, type: 3}
+  m_Name: Physics
   m_EditorClassIdentifier: 
-  ID: 0
-  Name: 
-  Description: 
-  privious: 0
+  nodes: []

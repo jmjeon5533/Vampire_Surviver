@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TechTree;
 
 public class CardManager : MonoBehaviour
 {
@@ -18,6 +19,7 @@ public class CardManager : MonoBehaviour
     [Header("List")]
     public List<GameObject> techTables = new List<GameObject>(); //생성될 테크 종류
     public List<GameObject> SelectedTable = new List<GameObject>(); //선택된 테크 종류
+    public List<TechTreeTable> TechScript = new List<TechTreeTable>(); //생성될 테크 스크립트
 
     public RectTransform[] TechTableRect = new RectTransform[3]; //복제될 3개의 좌표
     public enum PanelType
