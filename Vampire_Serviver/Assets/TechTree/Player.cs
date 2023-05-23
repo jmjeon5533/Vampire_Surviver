@@ -12,6 +12,8 @@ public class Player : MonoBehaviour
     public float MaxXP = 100;
     private int AddLevelXP = 5;
 
+    public int AttackDamage;
+
     public int Level = 1;
     public int SelectCount;
 

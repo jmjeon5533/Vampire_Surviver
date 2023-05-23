@@ -327,3 +327,5 @@ MonoBehaviour:
   MyPos: {x: 0, y: 0, z: 0}
   CancelImage: {fileID: 4698757522322810517}
   TechName: {fileID: 4698757521405602406}
+  Index: 0
+  ID: 1

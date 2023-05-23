@@ -72,7 +72,7 @@ MonoBehaviour:
   table: {fileID: 11400000}
   id: 11
   active: 0
-  position: {x: 250, y: 90, z: 0}
+  position: {x: 240, y: 90, z: 0}
   command: 
   nexts: []
 --- !u!114 &-6195168795902081794
@@ -146,7 +146,7 @@ MonoBehaviour:
   table: {fileID: 11400000}
   id: 12
   active: 0
-  position: {x: 250, y: 260, z: 0}
+  position: {x: 240, y: 260, z: 0}
   command: 
   nexts: []
 --- !u!114 &-1614210074011429299
@@ -266,6 +266,6 @@ MonoBehaviour:
   table: {fileID: 11400000}
   id: 10
   active: 0
-  position: {x: 250, y: -80, z: 0}
+  position: {x: 240, y: -80, z: 0}
   command: 
   nexts: []

@@ -9,9 +9,11 @@ public class ClickEvent : MonoBehaviour,IPointerClickHandler
     public Vector3 MyPos;
     public GameObject CancelImage;
     public Text TechName;
-
+    public int Index;
+    public int ID;
     RectTransform rect;
     float time = 0;
+    int ActiveNum;
     public void OnPointerClick(PointerEventData eventData)
     {
         CardManager.instance.ActiveCard(this);
@@ -25,8 +27,9 @@ public class ClickEvent : MonoBehaviour,IPointerClickHandler
         CancelImage.SetActive(false);
         MyPos = rect.anchoredPosition3D;
     }
-    public void TechAnchor()
+    public void TechAnchor(int ButtonIndex)
     {
+        ActiveNum = ButtonIndex;
         StopCoroutine("ResetMove");
         StartCoroutine("TechMove");
     }
@@ -37,6 +40,7 @@ public class ClickEvent : MonoBehaviour,IPointerClickHandler
     }
     IEnumerator TechMove()
     {
+
         CancelImage.SetActive(true);
         while (time < 1)
         {
@@ -46,11 +50,10 @@ public class ClickEvent : MonoBehaviour,IPointerClickHandler
             time += Time.deltaTime;
             yield return null;
         }
-        CardManager.instance.UsePointButton.SetActive(true);
+        CardManager.instance.NodeActive(CardManager.instance.TransformObject[ActiveNum]);
     }
     IEnumerator ResetMove()
     {
-        CardManager.instance.UsePointButton.SetActive(false);
         CancelImage.SetActive(false);
         while (time > 0)
         {
