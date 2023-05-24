@@ -50,7 +50,7 @@ public class ClickEvent : MonoBehaviour,IPointerClickHandler
             time += Time.deltaTime;
             yield return null;
         }
-        CardManager.instance.NodeActive(CardManager.instance.TransformObject[ActiveNum]);
+        CardManager.instance.NodeActive(CardManager.instance.TransformObject[ID]);
     }
     IEnumerator ResetMove()
     {
