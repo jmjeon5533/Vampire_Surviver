@@ -4,49 +4,25 @@ using UnityEngine;
 using UnityEngine.UI;
 using TechTree;
 
-[System.Serializable]
-public class StringBoolDictionary : SerializableDictionary<string, bool> { }
-
-public interface IStringBoolDictionary
+public class CardManager : MonoBehaviour
 {
-    IDictionary<string, bool> StringBoolDictionary { get; set; }
-}
+    public static CardManager instance { get; private set; }
 
-public class CardManager : MonoBehaviour, IStringBoolDictionary
-{
+    [SerializeField] private RectTransform shadowPanel;
+    [SerializeField] private RectTransform techrootparent;
+    [Space(10)]
+    [SerializeField] private List<TechTreeTable> techTreeTables = new List<TechTreeTable>();
+    [SerializeField] private List<GameObject> techRootPrefebs = new List<GameObject>();
+    [SerializeField] private List<RectTransform> techRootPositions = new List<RectTransform>();
+    [SerializeField] private GameObject techTreeNodePrefeb;
 
-    public static CardManager instance = new CardManager();
+    private List<int> selectedTechTreeIndex = new List<int>();
+    private List<RootInfo> rootinfos = new List<RootInfo>();
 
-    [Header("Tab")]
-    public GameObject SelectTab;
-    [SerializeField] Transform CardTable;
-    [Header("Element")]
-    public Transform SelectTransform;
-    public ClickEvent TechCard;
-    public ClickEvent[] SelectAbleCard;
-    [SerializeField] Text SelectCountText;
-    [Header("List")]
-    public List<GameObject> techTables = new List<GameObject>();
-    public List<GameObject> SelectedTable = new List<GameObject>();
-    public List<int> SelectedValue = new List<int>();
-    public List<GameObject> CreatedTransform = new List<GameObject>();
-    public GameObject TechPrefab;
-    public Transform TechTransform;
-    public List<GameObject> TransformObject = new List<GameObject>();
-    public StringBoolDictionary isEnableDic;
-    public List<TechTreeTable> TechScript = new List<TechTreeTable>();
-    public RectTransform[] TechTableRect = new RectTransform[3];
-    public enum PanelType
+    public void SelectStart()
     {
-        Card,
-        Tech
-    }
-    public PanelType panelType = PanelType.Card;
-
-    public IDictionary<string, bool> StringBoolDictionary
-    {
-        get { return isEnableDic; }
-        set { isEnableDic.CopyFrom(value); }
+        shadowPanel.gameObject.SetActive(true);
+        techrootparent.gameObject.SetActive(true);
     }
 
     private void Awake()
@@ -56,182 +32,67 @@ public class CardManager : MonoBehaviour, IStringBoolDictionary
 
     private void Start()
     {
-        for (int i = 0; i < CardTable.childCount; i++)
-        {
-            SelectAbleCard[i] = CardTable.GetChild(i).GetComponent<ClickEvent>();
-        }
-        CreateTechTree();
-    }
+        var remainindex = new List<int>();
+        for (int i = 0; i < techTreeTables.Count; i++) remainindex.Add(i);
 
-    public void CreateTechTree()
-    {
-        for (int i = 0; i < TechScript.Count; i++)
+        for (int i = 0; i < techRootPositions.Count; i++)
         {
-            var tempi = techTables[i].GetComponent<ClickEvent>().ID;
-            var parent = Instantiate(new GameObject(), TechTransform);
-            parent.name = TechScript[i].name;
-            for (int j = 1; j < TechScript[i].Nodes.Count; j++)
+            var index = i;
+            var select = remainindex[Random.Range(0, remainindex.Count)];
+
+            var root = Instantiate(techRootPrefebs[select], techrootparent).GetComponent<RectTransform>();
+            root.anchoredPosition = techRootPositions[i].anchoredPosition;
+
+            selectedTechTreeIndex.Add(select);
+
+            rootinfos.Add(new RootInfo());
+            rootinfos[i].table = techTreeTables[selectedTechTreeIndex[i]];
+            rootinfos[i].rootObj = root.GetComponent<ClickEvent>();
+
+            rootinfos[i].rootObj.Init(() => 
             {
-                var tempj = j;
-                var EachTechPos = TechScript[i].Nodes[j].Position;
-                var Prefab = Instantiate(TechPrefab, parent.transform);
-                Prefab.GetComponent<RectTransform>().anchoredPosition3D = EachTechPos;
-                isEnableDic.Add(tempi.ToString("D2") + tempj, TechScript[i].Nodes[j].Active);
-                var button = Prefab.GetComponent<Button>();
-                button.onClick.RemoveAllListeners();
-                button.onClick.AddListener(() => SkillPointUse(tempi.ToString("D2") + tempj));
-            }
-            TransformObject.Add(parent);
-            parent.SetActive(false);
+                rootinfos[index].isSelected = true;
+            });
+
+            remainindex.Remove(select);
         }
 
-        for (int i = 0; i < SelectedTable.Count; i++)
+        for (int i = 0; i < techRootPositions.Count; i++)
         {
-            var obj = Instantiate(SelectedTable[i], TechTableRect[i].position, Quaternion.identity, SelectTransform);
-            SelectAbleCard[i] = obj.GetComponent<ClickEvent>();
-        }
-    }
-
-    public void NodeActive(GameObject Obj = null)
-    {
-        for (int i = 0; i < TransformObject.Count; i++)
-        {
-            TransformObject[i].SetActive(false);
-        }
-        if (Obj != null) Obj.SetActive(true);
-    }
-
-    public void SkillPointUse(string ID)
-    {
-        print(ID);
-        if (GameManager.Instance.player.SelectCount != 0)
-        {
-            if (!isEnableDic[ID])
+            var table = rootinfos[i].table;
+            for (int j = 0; j < table.Nodes.Count; j++)
             {
-                isEnableDic[ID] = true;
-                GameManager.Instance.player.SelectCount--;
-                if (GameManager.Instance.player.SelectCount <= 0) SelectEnd();
-            }
-            else
-            {
-                print("사용함");
+                rootinfos[i].nodeInfos.Add(new NodeInfo());
+                rootinfos[i].nodeInfos[j].targetnode = table.Nodes[j];
+
+                for (int k = 0; k < table.Nodes[j].Nexts.Count; k++) rootinfos[i].nodeInfos[j].nextIndexs.Add(table.Nodes[j].Nexts[k].Id);
+
+                var nodeObj = Instantiate(techTreeNodePrefeb, rootinfos[i].rootObj.transform);
+                nodeObj.transform.localPosition = table.Nodes[j].Position + Vector3.up * 550;
+                nodeObj.SetActive(false);
+
+                rootinfos[i].nodeInfos[j].nodeObj = nodeObj.transform as RectTransform;
             }
         }
-        UIUpdate();
     }
+}
 
-    public void ActiveCard(ClickEvent card)
-    {
-        switch (panelType)
-        {
-            case PanelType.Card:
-                {
-                    TechCard = card;
-                    int ActiveNum = 0;
-                    for (int i = 0; i < SelectAbleCard.Length; i++)
-                    {
-                        if (SelectAbleCard[i] != card)
-                        {
-                            SelectAbleCard[i].GetComponent<Image>().enabled = false;
-                            SelectAbleCard[i].TechName.enabled = false;
-                        }
-                        else
-                        {
-                            SelectAbleCard[i].GetComponent<Image>().enabled = true;
-                            SelectAbleCard[i].TechName.enabled = true;
-                            ActiveNum = i;
-                        }
-                    }
-                    TechCard.TechAnchor(ActiveNum);
+[System.Serializable]
+public class RootInfo
+{
+    public TechTreeTable table;
+    public List<NodeInfo> nodeInfos = new List<NodeInfo>();
 
-                    panelType = PanelType.Tech;
-                    break;
-                }
-            case PanelType.Tech:
-                {
-                    for (int i = 0; i < SelectAbleCard.Length; i++)
-                    {
-                        SelectAbleCard[i].TechName.enabled = true;
-                    }
-                    for (int i = 0; i < TransformObject.Count; i++)
-                    {
-                        TransformObject[i].SetActive(false);
-                    }
-                    TechCard.ResetAnchor();
-                    TechCard = null;
-                    ElementSetActive(true);
-                    panelType = PanelType.Card;
-                    break;
-                }
-        }
-        UIUpdate();
-    }
+    public ClickEvent rootObj;
+    public bool isSelected;
+}
 
-    public void ElementSetActive(bool b)
-    {
-        for (int i = 0; i < SelectAbleCard.Length; i++)
-        {
-            SelectAbleCard[i].GetComponent<Image>().enabled = b;
-        }
-    }
+[System.Serializable]
+public class NodeInfo
+{
+    public TechTreeNode targetnode;
+    public List<int> nextIndexs = new List<int>();
+    public bool isActive;
 
-    public void SelectStart()
-    {
-        SelectTab.SetActive(true);
-        SelectShuffle();
-        NodeActive();
-        UIUpdate();
-    }
-
-    public void SelectEnd()
-    {
-        panelType = PanelType.Card;
-        TechCard.EndTabResetAnchor();
-        TechCard = null;
-        SelectTab.SetActive(false);
-    }
-
-    public void UIUpdate()
-    {
-        SelectCountText.text = "남은 포인트 : " + GameManager.Instance.player.SelectCount;
-    }
-
-    private void SelectShuffle()
-    {
-        List<GameObject> availableObjects = new List<GameObject>(techTables);
-
-        if (SelectAbleCard[0] != null)
-        {
-            SelectedTable.Clear();
-            SelectedValue.Clear();
-            for (int i = 0; i < 3; i++)
-            {
-                Destroy(SelectAbleCard[i].gameObject);
-            }
-        }
-
-        for (int i = 0; i < 3; i++)
-        {
-            if (availableObjects.Count == 0)
-            {
-                Debug.LogWarning("There are not enough available objects to select.");
-                break;
-            }
-
-            int randomIndex = Random.Range(0, availableObjects.Count);
-
-            GameObject selectedObject = availableObjects[randomIndex];
-            SelectedTable.Add(selectedObject);
-            selectedObject.GetComponent<ClickEvent>().Index = i;
-            SelectedValue.Add(selectedObject.GetComponent<ClickEvent>().ID);
-
-            availableObjects.RemoveAt(randomIndex);
-        }
-
-        for (int i = 0; i < SelectedTable.Count; i++)
-        {
-            var obj = Instantiate(SelectedTable[i], TechTableRect[i].position, Quaternion.identity, SelectTransform);
-            SelectAbleCard[i] = obj.GetComponent<ClickEvent>();
-        }
-    }
+    public RectTransform nodeObj;
 }

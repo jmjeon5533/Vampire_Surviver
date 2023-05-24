@@ -1,0 +1,6 @@
+{
+    "editor.codeLens": false,
+    "files.watcherExclude": {
+        "*.meta*": true
+    }
+}

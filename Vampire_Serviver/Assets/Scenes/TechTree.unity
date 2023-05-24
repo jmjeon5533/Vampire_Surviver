@@ -1890,36 +1890,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a6ee28e35a4d714d9fcc810a3d94d79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SelectTab: {fileID: 998278183}
-  CardTable: {fileID: 2058210432}
-  SelectTransform: {fileID: 2058210432}
-  TechCard: {fileID: 0}
-  SelectAbleCard:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  SelectCountText: {fileID: 2140027973}
-  techTables:
-  - {fileID: 4698757522847346186, guid: 76a4b1e8a13bb244992f90b9e7f9b2fa, type: 3}
-  - {fileID: 4698757522847346186, guid: 5e265979b2b9a9543baf1f745d279ce4, type: 3}
-  - {fileID: 4698757522847346186, guid: 22091557d38e14042823d26f6dfa2868, type: 3}
-  - {fileID: 4698757522847346186, guid: d6417846b3ca7f14da447695c0894fbf, type: 3}
-  SelectedTable: []
-  SelectedValue: 
-  CreatedTransform: []
-  TechPrefab: {fileID: 5943871445203119441, guid: fc2b48dbbaf8d3a458d162965338672e, type: 3}
-  TechTransform: {fileID: 829087995}
-  TransformObject: []
-  TechScript:
+  shadowPanel: {fileID: 998278184}
+  techrootparent: {fileID: 2058210432}
+  techTreeTables:
   - {fileID: 11400000, guid: f1bce3a341b224b48816f392c942711b, type: 2}
   - {fileID: 11400000, guid: 0a7e50396b796ee4b88897f1b827e9e8, type: 2}
   - {fileID: 11400000, guid: a594a4bb6a77aed4aa44cac45f511925, type: 2}
   - {fileID: 11400000, guid: 2f866a31a545a6e4194ae5fc127123aa, type: 2}
-  TechTableRect:
+  techRootPrefebs:
+  - {fileID: 4698757522847346186, guid: 76a4b1e8a13bb244992f90b9e7f9b2fa, type: 3}
+  - {fileID: 4698757522847346186, guid: 5e265979b2b9a9543baf1f745d279ce4, type: 3}
+  - {fileID: 4698757522847346186, guid: 22091557d38e14042823d26f6dfa2868, type: 3}
+  - {fileID: 4698757522847346186, guid: d6417846b3ca7f14da447695c0894fbf, type: 3}
+  techRootPositions:
   - {fileID: 617242601}
   - {fileID: 667196512}
   - {fileID: 115129900}
-  panelType: 0
+  techTreeNodePrefeb: {fileID: 5943871445203119441, guid: fc2b48dbbaf8d3a458d162965338672e, type: 3}
+  rootinfos: []
 --- !u!1 &1975059193
 GameObject:
   m_ObjectHideFlags: 0
@@ -2088,7 +2076,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2058210432
 RectTransform:
   m_ObjectHideFlags: 0
