@@ -2,5 +2,25 @@
     "editor.codeLens": false,
     "files.watcherExclude": {
         "*.meta*": true
-    }
+    },
+    "search.useGlobalIgnoreFiles": true,
+    "search.useParentIgnoreFiles": true,
+    "workbench.localHistory.exclude": {
+        "**/.meta": true
+    },
+    "files.exclude": {
+        "**/*.meta": true,
+        "Temp": true,
+        "Library": true,
+        "ProjectSettings": true,
+        "obj": true,
+        ".vs": true,
+        ".vscode": true,
+        "Assembly-C*.*": true,
+        "*.csproj": true,
+        "*.orig": true,
+        "*.user": true,
+        "*.userprefs": true
+    },
+    "editor.mouseWheelZoom": true
 }

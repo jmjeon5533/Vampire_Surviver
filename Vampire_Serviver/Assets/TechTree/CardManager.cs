@@ -17,7 +17,8 @@ public class CardManager : MonoBehaviour
     [SerializeField] private GameObject techTreeNodePrefeb;
 
     private List<int> selectedTechTreeIndex = new List<int>();
-    private List<RootInfo> rootinfos = new List<RootInfo>();
+    private List<ClickEvent> rootinfos = new List<ClickEvent>();
+    private int selectedIndex;
 
     public void SelectStart()
     {
@@ -28,6 +29,8 @@ public class CardManager : MonoBehaviour
     private void Awake()
     {
         instance = this;
+
+        selectedIndex = -1;
     }
 
     private void Start()
@@ -45,13 +48,23 @@ public class CardManager : MonoBehaviour
 
             selectedTechTreeIndex.Add(select);
 
-            rootinfos.Add(new RootInfo());
-            rootinfos[i].table = techTreeTables[selectedTechTreeIndex[i]];
-            rootinfos[i].rootObj = root.GetComponent<ClickEvent>();
+            rootinfos.Add(root.GetComponent<ClickEvent>());
+            rootinfos[i].Table = techTreeTables[selectedTechTreeIndex[i]];
 
-            rootinfos[i].rootObj.Init(() => 
+            rootinfos[i].Init((isSelected) =>
             {
-                rootinfos[index].isSelected = true;
+                if (!isSelected) selectedIndex = -1;
+                else selectedIndex = index;
+
+                if (selectedIndex == -1) for (int i = 0; i < rootinfos.Count; i++) rootinfos[i].gameObject.SetActive(true);
+                else
+                {
+                    for (int i = 0; i < rootinfos.Count; i++)
+                    {
+                        if (i == selectedIndex) rootinfos[i].gameObject.SetActive(true);
+                        else rootinfos[i].gameObject.SetActive(false);
+                    }
+                }
             });
 
             remainindex.Remove(select);
@@ -59,40 +72,22 @@ public class CardManager : MonoBehaviour
 
         for (int i = 0; i < techRootPositions.Count; i++)
         {
-            var table = rootinfos[i].table;
+            var table = rootinfos[i].Table;
             for (int j = 0; j < table.Nodes.Count; j++)
             {
-                rootinfos[i].nodeInfos.Add(new NodeInfo());
-                rootinfos[i].nodeInfos[j].targetnode = table.Nodes[j];
+                var nodeinfos = rootinfos[i].NodeInfos;
 
-                for (int k = 0; k < table.Nodes[j].Nexts.Count; k++) rootinfos[i].nodeInfos[j].nextIndexs.Add(table.Nodes[j].Nexts[k].Id);
+                nodeinfos.Add(new NodeInfo());
+                nodeinfos[j].targetnode = table.Nodes[j];
 
-                var nodeObj = Instantiate(techTreeNodePrefeb, rootinfos[i].rootObj.transform);
-                nodeObj.transform.localPosition = table.Nodes[j].Position + Vector3.up * 550;
+                for (int k = 0; k < table.Nodes[j].Nexts.Count; k++) nodeinfos[j].nextIndexs.Add(table.Nodes[j].Nexts[k].Id);
+
+                var nodeObj = Instantiate(techTreeNodePrefeb, rootinfos[i].transform);
+                nodeObj.transform.localPosition = table.Nodes[j].Position + Vector3.up * 400;
                 nodeObj.SetActive(false);
 
-                rootinfos[i].nodeInfos[j].nodeObj = nodeObj.transform as RectTransform;
+                nodeinfos[j].nodeObj = nodeObj.transform as RectTransform;
             }
         }
     }
-}
-
-[System.Serializable]
-public class RootInfo
-{
-    public TechTreeTable table;
-    public List<NodeInfo> nodeInfos = new List<NodeInfo>();
-
-    public ClickEvent rootObj;
-    public bool isSelected;
-}
-
-[System.Serializable]
-public class NodeInfo
-{
-    public TechTreeNode targetnode;
-    public List<int> nextIndexs = new List<int>();
-    public bool isActive;
-
-    public RectTransform nodeObj;
 }

@@ -324,8 +324,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fe0f51d049b296479e9d38023602693, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MyPos: {x: 0, y: 0, z: 0}
-  CancelImage: {fileID: 4698757522322810517}
-  TechName: {fileID: 4698757521405602406}
-  Index: 0
-  ID: 2
+  xMark: {fileID: 4698757522322810517}
