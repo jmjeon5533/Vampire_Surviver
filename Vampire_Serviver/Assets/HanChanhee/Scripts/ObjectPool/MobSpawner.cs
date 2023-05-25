@@ -50,7 +50,11 @@ public class MobSpawner : MonoBehaviour
                         break;
 
                 }
-                Vector3 spawnPos =Random.insideUnitSphere * 5;
+                Vector3 spawnPos =Random.insideUnitSphere * 15;
+                while(Vector3.Distance(spawnPos, player.transform.position) < 12)
+                {
+                    spawnPos = Random.insideUnitSphere * 15;
+                }
                 spawnPos = new Vector3(spawnPos.x, player.position.y, spawnPos.z);
                 obj.transform.position = spawnPos;
                 
