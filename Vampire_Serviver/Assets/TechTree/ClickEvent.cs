@@ -11,7 +11,9 @@ using TechTree;
 public class NodeInfo
 {
     public TechTreeNode targetnode;
+    public int previousIndex;
     public List<int> nextIndexs = new List<int>();
+    public string command;
     public bool isActive;
 
     public RectTransform nodeObj;
@@ -70,6 +72,7 @@ public class ClickEvent : MonoBehaviour, IPointerDownHandler
             }, 0.5f);
         else
             for(int i = 1; i < nodeInfos.Count; i++) nodeInfos[i].nodeObj.gameObject.SetActive(false);
+        UIManager.instance.UIUpdate();
     }
     
     private void Update() 

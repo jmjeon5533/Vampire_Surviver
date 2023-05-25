@@ -17,19 +17,23 @@ public class CardManager : MonoBehaviour
     [SerializeField] private GameObject techTreeNodePrefeb;
 
     private List<int> selectedTechTreeIndex = new List<int>();
-    private List<ClickEvent> rootinfos = new List<ClickEvent>();
+    [SerializeField] private List<ClickEvent> rootinfos = new List<ClickEvent>();
     private int selectedIndex;
+    private int currentIndex;
+
+    private Player player;
 
     public void SelectStart()
     {
         shadowPanel.gameObject.SetActive(true);
         techrootparent.gameObject.SetActive(true);
+        UIManager.instance.UIUpdate();
     }
 
     private void Awake()
     {
         instance = this;
-
+        player = GameManager.Instance.player;
         selectedIndex = -1;
     }
 
@@ -75,18 +79,44 @@ public class CardManager : MonoBehaviour
             var table = rootinfos[i].Table;
             for (int j = 0; j < table.Nodes.Count; j++)
             {
+                var nodeindex = j;
                 var nodeinfos = rootinfos[i].NodeInfos;
 
                 nodeinfos.Add(new NodeInfo());
                 nodeinfos[j].targetnode = table.Nodes[j];
-
                 for (int k = 0; k < table.Nodes[j].Nexts.Count; k++) nodeinfos[j].nextIndexs.Add(table.Nodes[j].Nexts[k].Id);
+                nodeinfos[j].command = table.Nodes[j].Command;
 
                 var nodeObj = Instantiate(techTreeNodePrefeb, rootinfos[i].transform);
                 nodeObj.transform.localPosition = table.Nodes[j].Position + Vector3.up * 400;
                 nodeObj.SetActive(false);
 
+                nodeObj.GetComponent<Button>().onClick.AddListener(() =>
+                {
+                    if (nodeinfos[nodeinfos[nodeindex].previousIndex].isActive && !nodeinfos[nodeindex].isActive && player.SelectCount > 0) 
+                    {
+                        nodeinfos[nodeindex].isActive = true;
+                        nodeObj.GetComponent<Image>().color = new Color(0, 0, 0, 0.5f);
+                        player.SelectCount--;
+                        //명령어
+                        Debug.Log(nodeinfos[nodeindex].command);
+                        UIManager.instance.UIUpdate();
+                    }
+                });
+
                 nodeinfos[j].nodeObj = nodeObj.transform as RectTransform;
+            }
+
+            rootinfos[i].NodeInfos[0].isActive = true;
+        }
+
+        for (int i = 0; i < rootinfos.Count; i++)
+        {
+            var nodeinfos = rootinfos[i].NodeInfos;
+            for (int j = 0; j < nodeinfos.Count; j++)
+            {
+                var nodeindex = j;
+                foreach (var index in nodeinfos[j].nextIndexs) nodeinfos[index].previousIndex = nodeindex;
             }
         }
     }

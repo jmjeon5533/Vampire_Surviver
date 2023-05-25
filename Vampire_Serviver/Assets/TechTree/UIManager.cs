@@ -19,9 +19,11 @@ public class UIManager : MonoBehaviour
     }
     public Image PersentImage;
     public Text PersentText;
+    public Text PointText;
     public void UIUpdate()
     {
         PersentImage.fillAmount = player.XP / player.MaxXP;
         PersentText.text = $"{Mathf.RoundToInt(player.XP * 100 / player.MaxXP)}%";
+        UIManager.instance.PointText.text = "스킬 포인트 : " + player.SelectCount.ToString();
     }
 }

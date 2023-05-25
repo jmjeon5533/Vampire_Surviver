@@ -1473,6 +1473,7 @@ MonoBehaviour:
   player: {fileID: 0}
   PersentImage: {fileID: 1015812981}
   PersentText: {fileID: 645792651}
+  PointText: {fileID: 2140027973}
 --- !u!1 &1140860403
 GameObject:
   m_ObjectHideFlags: 0
@@ -1894,9 +1895,9 @@ MonoBehaviour:
   techrootparent: {fileID: 2058210432}
   techTreeTables:
   - {fileID: 11400000, guid: f1bce3a341b224b48816f392c942711b, type: 2}
-  - {fileID: 11400000, guid: 0a7e50396b796ee4b88897f1b827e9e8, type: 2}
-  - {fileID: 11400000, guid: a594a4bb6a77aed4aa44cac45f511925, type: 2}
-  - {fileID: 11400000, guid: 2f866a31a545a6e4194ae5fc127123aa, type: 2}
+  - {fileID: 11400000, guid: 7cb378073824d5a45ad0f190a0e2ce6c, type: 2}
+  - {fileID: 11400000, guid: 0a1bcf85475f8be409d572be070cd943, type: 2}
+  - {fileID: 11400000, guid: cfc4ac41faac05d4f88e768c7d516f11, type: 2}
   techRootPrefebs:
   - {fileID: 4698757522847346186, guid: 76a4b1e8a13bb244992f90b9e7f9b2fa, type: 3}
   - {fileID: 4698757522847346186, guid: 5e265979b2b9a9543baf1f745d279ce4, type: 3}
@@ -2125,7 +2126,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2140027971}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -2135,7 +2136,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 14.5, y: 0}
+  m_AnchoredPosition: {x: 14.499939, y: 0}
   m_SizeDelta: {x: -29, y: 100}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &2140027973

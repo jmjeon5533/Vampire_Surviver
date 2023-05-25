@@ -35,7 +35,7 @@ MonoBehaviour:
   id: 1
   active: 0
   position: {x: -240, y: -250, z: 0}
-  command: 
+  command: test
   nexts:
   - {fileID: -8879209461247773247}
 --- !u!114 &-7631307587373776999
@@ -74,7 +74,8 @@ MonoBehaviour:
   active: 0
   position: {x: 240, y: 90, z: 0}
   command: 
-  nexts: []
+  nexts:
+  - {fileID: -2234713570889021379}
 --- !u!114 &-6195168795902081794
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -111,7 +112,8 @@ MonoBehaviour:
   active: 0
   position: {x: 240, y: -250, z: 0}
   command: 
-  nexts: []
+  nexts:
+  - {fileID: 5529404476426331114}
 --- !u!114 &-3733502997252961521
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -196,7 +198,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e592010a81e5464408941043602d5f49, type: 3}
-  m_Name: Magics
+  m_Name: Magic
   m_EditorClassIdentifier: 
   nodes:
   - {fileID: 2008361102349420443}
@@ -268,4 +270,5 @@ MonoBehaviour:
   active: 0
   position: {x: 240, y: -80, z: 0}
   command: 
-  nexts: []
+  nexts:
+  - {fileID: -7372057230307819691}
