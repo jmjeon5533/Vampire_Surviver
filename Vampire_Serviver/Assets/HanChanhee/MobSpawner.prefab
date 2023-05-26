@@ -47,3 +47,4 @@ MonoBehaviour:
   player: {fileID: 0}
   spawnCount: 2
   spawnTime: 1
+  distanceThreshold: 10

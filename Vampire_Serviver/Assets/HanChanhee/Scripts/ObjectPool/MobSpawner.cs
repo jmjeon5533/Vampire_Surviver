@@ -10,6 +10,8 @@ public class MobSpawner : MonoBehaviour
     
     [SerializeField] private float spawnTime;
 
+    [SerializeField] private float distanceThreshold;
+
     private float curSpawnTime = 0;
 
 
@@ -50,13 +52,12 @@ public class MobSpawner : MonoBehaviour
                         break;
 
                 }
-                Vector3 spawnPos =Random.insideUnitSphere * 15;
-                while(Vector3.Distance(spawnPos, player.transform.position) < 12)
-                {
-                    spawnPos = Random.insideUnitSphere * 15;
-                }
-                spawnPos = new Vector3(spawnPos.x, player.position.y, spawnPos.z);
-                obj.transform.position = spawnPos;
+                Vector3 randomDirection = Random.insideUnitSphere.normalized;
+
+                // 플레이어로부터 최소 거리 이상 떨어진 좌표 계산
+                Vector3 spawnPosition = player.position + randomDirection * distanceThreshold;
+               
+                obj.transform.position = new Vector3(spawnPosition.x, player.position.y, spawnPosition.z);
                 
 
             }

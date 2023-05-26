@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3513818083252350582}
   - component: {fileID: 3513818083252350583}
   - component: {fileID: 3513818083252350536}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Orange
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -51,14 +51,27 @@ public class Enemy_Red : EnemyBase
         transform.position += dir * speed * Time.deltaTime;
 
         // 타겟 방향으로 회전함
-        float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+        float angle = Mathf.Atan2(dir.z, dir.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.Euler(0,angle,0);
         //transform.Translate(transform.forward * speed * Time.deltaTime);
-
+        if(Vector3.Distance(Player.Instance.transform.position, transform.position) > 15)
+        {
+            //int minusPlusX = (player.transform.position.x <= transform.position.x) ? -1 : 1;
+            //int minusPlusZ = (player.transform.position.y <= transform.position.y) ? -1 : 1;
+            //transform.position = Player.Instance.transform.position + new Vector3((player.transform.position.x + transform.position.x) * minusPlusX, 0, (player.transform.position.z + transform.position.z) * minusPlusZ); 
+            Vector3 playerToObject = player.position - transform.position;
+            Vector3 targetPosition = player.position + playerToObject.normalized * (15);
+            transform.position = targetPosition;
+        }
     }
 
     // Start is called before the first frame update
     void Start()
+    {
+        player = Player.Instance.transform;
+    }
+
+    private void Awake()
     {
         
     }
