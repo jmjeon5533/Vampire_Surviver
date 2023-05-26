@@ -1,3 +1,4 @@
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -101,6 +102,8 @@ public class CardManager : MonoBehaviour
                         //명령어
                         Debug.Log(nodeinfos[nodeindex].command);
                         UIManager.instance.UIUpdate();
+                        //Debug.Log(techTreeTables[selectedTechTreeIndex[selectedIndex]].name);
+                        TestCommand.Instance.Command("Skill/Upgrade/" + techTreeTables[selectedTechTreeIndex[selectedIndex]].name + "/Node" + nodeindex);
                     }
                 });
 
