@@ -9,7 +9,7 @@ public class UpgradeSkill : MonoBehaviour
 
     private Dictionary<string, Delegate> NodeFunction = new Dictionary<string, Delegate>();
 
-    public Delegate GetDelegate(string key) => NodeFunction[key];
+    public void Invoke(string key, params object[] parameters) => NodeFunction[key].DynamicInvoke(parameters);
 
     private void Awake()
     {
