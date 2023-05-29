@@ -325,3 +325,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   xMark: {fileID: 4698757522322810517}
+  nodeInfos: []
+  table: {fileID: 0}

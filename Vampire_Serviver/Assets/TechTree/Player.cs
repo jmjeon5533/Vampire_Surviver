@@ -4,36 +4,43 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    
+    [Header("체력")]
     public float HP;
     public float MaxHP;
-
-    public float MoveSpeed = 2;
+    [Header("경험치")]
     public float XP;
     public float MaxXP = 100;
     private int AddLevelXP = 5;
-
-    public int AttackDamage;
-
     public int Level = 1;
+
+    [Header("공격 스탯")]
+    public float AttackDamage;
+    [SerializeField] private float TotalDamage;
+
+    public float attackSpeed;
+    public float BulletSpeed = 1;
+    public float BulletSize = 1;
+    public int BulletAmount = 1;
+    [Header("부가 스탯")]
+    public float MoveSpeed = 2;
     public int SelectCount;
+    [Header("특수 효과")]
+    public bool isAtkBulletSize = false;
+    public bool isAtkMoveSpeed = false;
 
-    public float attackSpeed = 1;
-
-    [SerializeField] private float attackCoolTime;
+    private float curAttackSpeed;
     private float curAttackTime = 0;
 
     public static Player Instance { get; private set; }
 
     [SerializeField] private float attackRange = 5;
 
-    
-
     private void Start()
     {
         if(Instance == null) Instance = this;
         else Destroy(this.gameObject);
-        attackCoolTime = 1 / attackCoolTime;
+        AtkSpeedInit();
+        TotalDamageInit();
         MaxHP = HP;
         XP = 0;
 
@@ -45,6 +52,10 @@ public class Player : MonoBehaviour
         transform.Translate(dir * MoveSpeed * Time.deltaTime, Space.World);
         Attack();
     }
+    public void AtkSpeedInit() => curAttackSpeed = 1 / attackSpeed;
+    public void TotalDamageInit() => TotalDamage 
+    = isAtkBulletSize ? AttackDamage + (BulletSize * 10) : AttackDamage;
+
     public void GetXP(int Value)
     {
         XP += Value;
@@ -62,20 +73,22 @@ public class Player : MonoBehaviour
     void Attack()
     {
         curAttackTime += Time.deltaTime;
-        Transform nearestEnemy = GetNearestEnemy();
-        if (curAttackTime > attackCoolTime)
+        if (curAttackTime > curAttackSpeed)
         {
+            Transform nearestEnemy = GetNearestEnemy();
             curAttackTime = 0;
             GameObject bullet = ObjectPool.GetPoolObject("PlayerBullet");
             bullet.transform.position = transform.position;
            
             Debug.Log(nearestEnemy.position);
-            Vector3 dir = nearestEnemy.position - transform.position;
-            dir = dir.normalized;
+            var dir = transform.position - nearestEnemy.position;
+            var rot = Mathf.Atan2(dir.x, dir.z) * Mathf.Rad2Deg - 180;
 
-            float angle = Mathf.Atan2(dir.z, dir.x) * Mathf.Rad2Deg + 90;
-           
-            bullet.transform.rotation = Quaternion.Euler(0, angle, 0);
+            // var dir = transform.position - target.transform.position;
+            // var rot = Mathf.Atan2(dir.x, dir.z) * Mathf.Rad2Deg - 180;
+            // Instantiate(bulletPrefeb, transform.position, Quaternion.Euler(0, rot, 0));
+
+            bullet.transform.rotation = Quaternion.Euler(0, rot, 0);
             
         }
     }

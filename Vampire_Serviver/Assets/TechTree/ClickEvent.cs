@@ -24,13 +24,15 @@ public class ClickEvent : MonoBehaviour, IPointerDownHandler
     [SerializeField] private GameObject xMark;
     [SerializeField] private List<NodeInfo> nodeInfos = new List<NodeInfo>();
     [SerializeField] private TechTreeTable table;
-
+    
+    private UpgradeSkill UpgradeNodes;
     private Vector2 startPos;
     private bool isSelected;
     private float curAnimationTime;
     private Action<bool> clickAction;
 
     public List<NodeInfo> NodeInfos => nodeInfos;
+    public UpgradeSkill upgradeNodes => UpgradeNodes;
     public TechTreeTable Table 
     {
         get { return table; }
@@ -39,6 +41,9 @@ public class ClickEvent : MonoBehaviour, IPointerDownHandler
 
     public bool IsPlayingAnimation => curAnimationTime > 0;
 
+    private void Awake(){
+        UpgradeNodes = GetComponent<UpgradeSkill>();
+    }
     private void Start() 
     {
         xMark.SetActive(false);

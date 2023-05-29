@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TechTree;
+using System.Linq;
 
 public class CardManager : MonoBehaviour
 {
@@ -19,6 +20,7 @@ public class CardManager : MonoBehaviour
 
     private List<int> selectedTechTreeIndex = new List<int>();
     [SerializeField] private List<ClickEvent> rootinfos = new List<ClickEvent>();
+    private List<RectTransform> curRootPrefab = new List<RectTransform>();
     private int selectedIndex;
     private int currentIndex;
 
@@ -42,13 +44,17 @@ public class CardManager : MonoBehaviour
     {
         var remainindex = new List<int>();
         for (int i = 0; i < techTreeTables.Count; i++) remainindex.Add(i);
+        for (int i = 0; i < techRootPrefebs.Count; i++)
+        {
+            curRootPrefab.Add(Instantiate(techRootPrefebs[i], techrootparent).GetComponent<RectTransform>());
+            curRootPrefab[i].gameObject.SetActive(false);
+        }
 
         for (int i = 0; i < techRootPositions.Count; i++)
         {
             var index = i;
             var select = remainindex[Random.Range(0, remainindex.Count)];
-
-            var root = Instantiate(techRootPrefebs[select], techrootparent).GetComponent<RectTransform>();
+            var root = curRootPrefab[select];
             root.anchoredPosition = techRootPositions[i].anchoredPosition;
 
             selectedTechTreeIndex.Add(select);
@@ -99,10 +105,14 @@ public class CardManager : MonoBehaviour
                         nodeinfos[nodeindex].isActive = true;
                         nodeObj.GetComponent<Image>().color = new Color(0, 0, 0, 0.5f);
                         player.SelectCount--;
-                        //명령어
+
+                        var split = nodeinfos[nodeindex].command.Split("/");
+                        var parameters = split.Skip(1).ToArray<object>();
+
                         Debug.Log(nodeinfos[nodeindex].command);
+                        UpgradeSkill.instance.GetDelegate(split[0]).DynamicInvoke(parameters);
                         UIManager.instance.UIUpdate();
-                        //Debug.Log(techTreeTables[selectedTechTreeIndex[selectedIndex]].name);
+                        
                         TestCommand.Instance.Command("Skill/Upgrade/" + techTreeTables[selectedTechTreeIndex[selectedIndex]].name + "/Node" + nodeindex);
                     }
                 });

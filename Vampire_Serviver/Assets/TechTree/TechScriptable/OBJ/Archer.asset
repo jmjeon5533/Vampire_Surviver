@@ -16,7 +16,7 @@ MonoBehaviour:
   id: 2
   active: 0
   position: {x: -240, y: -80, z: 0}
-  command: 
+  command: AddStat/1
   nexts:
   - {fileID: -7631307587373776999}
 --- !u!114 &-8198067779038495938
@@ -35,7 +35,7 @@ MonoBehaviour:
   id: 1
   active: 0
   position: {x: -240, y: -250, z: 0}
-  command: test
+  command: AtkSpeed/0.5
   nexts:
   - {fileID: -8879209461247773247}
 --- !u!114 &-7631307587373776999
@@ -54,7 +54,7 @@ MonoBehaviour:
   id: 3
   active: 0
   position: {x: -240, y: 90, z: 0}
-  command: 
+  command: AddStat/2
   nexts:
   - {fileID: -845061124526437944}
 --- !u!114 &-7372057230307819691
@@ -73,7 +73,7 @@ MonoBehaviour:
   id: 11
   active: 0
   position: {x: 240, y: 90, z: 0}
-  command: 
+  command: "None/\uACF5\uACA9 \uC801\uC911 \uC2DC \uC774\uC18D \uC99D\uAC00"
   nexts:
   - {fileID: -2234713570889021379}
 --- !u!114 &-6195168795902081794
@@ -92,7 +92,7 @@ MonoBehaviour:
   id: 7
   active: 0
   position: {x: 0, y: 90, z: 0}
-  command: 
+  command: SizeOfAtk
   nexts:
   - {fileID: 268668996877641892}
 --- !u!114 &-5620796193694662885
@@ -111,7 +111,7 @@ MonoBehaviour:
   id: 9
   active: 0
   position: {x: 240, y: -250, z: 0}
-  command: 
+  command: MoveSpeed/3
   nexts:
   - {fileID: 5529404476426331114}
 --- !u!114 &-3733502997252961521
@@ -130,7 +130,7 @@ MonoBehaviour:
   id: 6
   active: 0
   position: {x: 0, y: -80, z: 0}
-  command: 
+  command: AtkStat/5
   nexts:
   - {fileID: -6195168795902081794}
 --- !u!114 &-2234713570889021379
@@ -149,7 +149,7 @@ MonoBehaviour:
   id: 12
   active: 0
   position: {x: 240, y: 260, z: 0}
-  command: 
+  command: None/12
   nexts: []
 --- !u!114 &-1614210074011429299
 MonoBehaviour:
@@ -167,7 +167,7 @@ MonoBehaviour:
   id: 5
   active: 0
   position: {x: 0, y: -250, z: 0}
-  command: 
+  command: SizeStat/0.3
   nexts:
   - {fileID: -3733502997252961521}
 --- !u!114 &-845061124526437944
@@ -186,7 +186,7 @@ MonoBehaviour:
   id: 4
   active: 0
   position: {x: -240, y: 260, z: 0}
-  command: 
+  command: None/4
   nexts: []
 --- !u!114 &11400000
 MonoBehaviour:
@@ -230,7 +230,7 @@ MonoBehaviour:
   id: 8
   active: 0
   position: {x: 0, y: 260, z: 0}
-  command: 
+  command: None/8
   nexts: []
 --- !u!114 &2008361102349420443
 MonoBehaviour:
@@ -269,6 +269,6 @@ MonoBehaviour:
   id: 10
   active: 0
   position: {x: 240, y: -80, z: 0}
-  command: 
+  command: BulletSpeed/3
   nexts:
   - {fileID: -7372057230307819691}
