@@ -905,7 +905,7 @@ MonoBehaviour:
   Level: 1
   AttackDamage: 0
   TotalDamage: 0
-  attackSpeed: 1
+  attackSpeed: 5
   BulletSpeed: 1
   BulletSize: 1
   BulletAmount: 1
