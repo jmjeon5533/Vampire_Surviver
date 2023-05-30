@@ -56,6 +56,7 @@ public class ClickEvent : MonoBehaviour, IPointerDownHandler
 
         isSelected = !isSelected;
         xMark.SetActive(isSelected);
+        UIManager.instance.CompleteButton.SetActive(!isSelected);
 
         if(isSelected)
         {

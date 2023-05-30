@@ -20,6 +20,7 @@ public class UIManager : MonoBehaviour
     public Image PersentImage;
     public Text PersentText;
     public Text PointText;
+    public GameObject CompleteButton;
     public void UIUpdate()
     {
         PersentImage.fillAmount = player.XP / player.MaxXP;

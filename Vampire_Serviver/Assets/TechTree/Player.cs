@@ -87,7 +87,6 @@ public class Player : MonoBehaviour
             bullet.transform.position = transform.position;
             bullet.GetComponent<Bullet>().speed = BulletSpeed * 2;
            
-            Debug.Log(nearestEnemy.position);
             var dir = transform.position - nearestEnemy.position;
             var rot = (Mathf.Atan2(dir.x, dir.z) * Mathf.Rad2Deg + 180) % 360;
 
