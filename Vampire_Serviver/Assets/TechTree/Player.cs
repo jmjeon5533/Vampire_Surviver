@@ -47,11 +47,17 @@ public class Player : MonoBehaviour
     }
     void Update()
     {
+        Move();
+        Attack();
+    }
+
+    void Move()
+    {
         var dir = new Vector3(JoyStick.stick.Value.x, 0, JoyStick.stick.Value.y);
         dir = transform.TransformDirection(dir);
         transform.Translate(dir * MoveSpeed * Time.deltaTime, Space.World);
-        Attack();
     }
+    
     public void AtkSpeedInit() => curAttackSpeed = 1 / attackSpeed;
     public void TotalDamageInit() => TotalDamage 
     = isAtkBulletSize ? AttackDamage + (BulletSize * 10) : AttackDamage;
@@ -79,16 +85,17 @@ public class Player : MonoBehaviour
             curAttackTime = 0;
             GameObject bullet = ObjectPool.GetPoolObject("PlayerBullet");
             bullet.transform.position = transform.position;
+            bullet.GetComponent<Bullet>().speed = BulletSpeed * 2;
            
             Debug.Log(nearestEnemy.position);
             var dir = transform.position - nearestEnemy.position;
-            var rot = Mathf.Atan2(dir.x, dir.z) * Mathf.Rad2Deg - 180;
+            var rot = (Mathf.Atan2(dir.x, dir.z) * Mathf.Rad2Deg + 180) % 360;
 
             // var dir = transform.position - target.transform.position;
             // var rot = Mathf.Atan2(dir.x, dir.z) * Mathf.Rad2Deg - 180;
             // Instantiate(bulletPrefeb, transform.position, Quaternion.Euler(0, rot, 0));
 
-            bullet.transform.rotation = Quaternion.Euler(0, rot, 0);
+            bullet.transform.rotation = Quaternion.Euler(0,rot/2,0);
             
         }
     }

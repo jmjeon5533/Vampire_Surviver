@@ -27,6 +27,7 @@ public class CardManager : MonoBehaviour
 
     public void SelectStart()
     {
+        //Time.timeScale = 0;
         shadowPanel.gameObject.SetActive(true);
         techrootparent.gameObject.SetActive(true);
         UIManager.instance.UIUpdate();
