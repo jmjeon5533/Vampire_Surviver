@@ -20,7 +20,6 @@ public class CardManager : MonoBehaviour
 
     private List<int> selectedTechTreeIndex = new List<int>();
     [SerializeField] private List<ClickEvent> rootinfos = new List<ClickEvent>();
-    public List<RectTransform> curRootPrefab = new List<RectTransform>();
     private int selectedIndex;
     private int currentIndex;
 
@@ -30,9 +29,7 @@ public class CardManager : MonoBehaviour
     {
         shadowPanel.gameObject.SetActive(true);
         techrootparent.gameObject.SetActive(true);
-        ShuffingTech();
         UIManager.instance.UIUpdate();
-
     }
 
     private void Awake()
@@ -41,16 +38,17 @@ public class CardManager : MonoBehaviour
         player = GameManager.Instance.player;
         selectedIndex = -1;
     }
-    private void ShuffingTech()
+
+    private void Start()
     {
         var remainindex = new List<int>();
         for (int i = 0; i < techTreeTables.Count; i++) remainindex.Add(i);
+
         for (int i = 0; i < techRootPositions.Count; i++)
         {
             var index = i;
             var select = remainindex[Random.Range(0, remainindex.Count)];
-            var root = curRootPrefab[select];
-            root.gameObject.SetActive(true);
+            var root = Instantiate(techRootPrefebs[select], techrootparent).GetComponent<RectTransform>();
             root.anchoredPosition = techRootPositions[i].anchoredPosition;
 
             selectedTechTreeIndex.Add(select);
@@ -76,17 +74,8 @@ public class CardManager : MonoBehaviour
 
             remainindex.Remove(select);
         }
-    }
 
-    private void Start()
-    {
-
-        for (int i = 0; i < techRootPrefebs.Count; i++)
-        {
-            curRootPrefab.Add(Instantiate(techRootPrefebs[i], techrootparent).GetComponent<RectTransform>());
-            curRootPrefab[i].gameObject.SetActive(false);
-        }
-        for (int i = 0; i < techRootPrefebs.Count; i++)
+        for (int i = 0; i < techRootPositions.Count; i++)
         {
             var table = rootinfos[i].Table;
             for (int j = 0; j < table.Nodes.Count; j++)
@@ -118,7 +107,7 @@ public class CardManager : MonoBehaviour
                         UpgradeSkill.instance.Invoke(split[0], parameters);
                         UIManager.instance.UIUpdate();
                         
-                        TestCommand.Instance.Command("Skill/Upgrade/" + techTreeTables[selectedTechTreeIndex[selectedIndex]].name + "/Node" + nodeindex);
+                        //TestCommand.Instance.Command("Skill/Upgrade/" + techTreeTables[selectedTechTreeIndex[selectedIndex]].name + "/Node" + nodeindex);
                     }
                 });
 
