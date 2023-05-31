@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Enemy_Red : EnemyBase
 {
+    private const int Value = -50;
     [SerializeField]
     Transform player;
 
@@ -14,11 +15,16 @@ public class Enemy_Red : EnemyBase
     public override void Damaged(float value)
     {
         base.Damaged(value);
+        DamageUI.Instance.SpawnDamageText(transform, Player.Instance.GetTotalDamage().ToString(), Color.white);
+
     }
 
     public override void Death()
     {
         base.Death();
+        string[] returnName = gameObject.name.Split('(');
+        ObjectPool.ReturnPoolObject(this.gameObject, returnName[0]);
+        
     }
 
     public override void Initialize()
@@ -31,6 +37,7 @@ public class Enemy_Red : EnemyBase
         if(Vector3.Distance(this.transform.position, player.position) < 0.3f && !isAttack)
         {
             StartCoroutine(AttackDelay());
+            Player.Instance.Damaged(5);
         }
     }
 
@@ -69,11 +76,22 @@ public class Enemy_Red : EnemyBase
     void Start()
     {
         player = Player.Instance.transform;
+        maxHp = hp;
     }
 
     private void Awake()
     {
         
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.CompareTag("Bullet")) {
+            ObjectPool.ReturnPoolObject(other.gameObject, "PlayerBullet");
+            Damaged(Player.Instance.GetTotalDamage());
+            
+
+        }
     }
 
     // Update is called once per frame

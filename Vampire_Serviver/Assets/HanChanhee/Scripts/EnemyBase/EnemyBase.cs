@@ -27,7 +27,8 @@ public abstract class EnemyBase : MonoBehaviour, IEnemyBase
 
     public virtual void Damaged(float value)
     {
-       if(hp < 0)
+       hp-=value;
+        if(hp < 0)
         {
             hp = 0;
 
@@ -38,7 +39,7 @@ public abstract class EnemyBase : MonoBehaviour, IEnemyBase
     public virtual void Death()
     {
         isAlive = false;
-        
+       
     }
 
     public float GetHp()

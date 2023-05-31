@@ -37,7 +37,7 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
-        if(Instance == null) Instance = this;
+        if (Instance == null) Instance = this;
         else Destroy(this.gameObject);
         AtkSpeedInit();
         TotalDamageInit();
@@ -45,6 +45,9 @@ public class Player : MonoBehaviour
         XP = 0;
 
     }
+
+
+
     void Update()
     {
         Move();
@@ -57,10 +60,12 @@ public class Player : MonoBehaviour
         dir = transform.TransformDirection(dir);
         transform.Translate(dir * MoveSpeed * Time.deltaTime, Space.World);
     }
-    
+
     public void AtkSpeedInit() => curAttackSpeed = 1 / attackSpeed;
-    public void TotalDamageInit() => TotalDamage 
+    public void TotalDamageInit() => TotalDamage
     = isAtkBulletSize ? AttackDamage + (BulletSize * 10) : AttackDamage;
+
+   
 
     public void GetXP(int Value)
     {
@@ -75,6 +80,12 @@ public class Player : MonoBehaviour
         }
         UIManager.instance.UIUpdate();
     }
+
+    public float GetTotalDamage()
+    {
+        return TotalDamage;
+    }
+
 
     void Attack()
     {
@@ -120,6 +131,7 @@ public class Player : MonoBehaviour
     public void Damaged(float value)
     {
         HP -= value;
+        DamageUI.Instance.SpawnDamageText(transform, value.ToString(), Color.red);
         if(HP <= 0)
         {
             Death();
@@ -130,5 +142,6 @@ public class Player : MonoBehaviour
     {
         
         gameObject.SetActive(false);
+        Time.timeScale = 0f;
     }
 }
